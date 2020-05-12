@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Trivia from Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Trivia</a></li>
+                    <li><a href="game.html">Start a Game</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="leaguehistory" href="account.html">Account</a></li>
+                    <li><a id="seasonstats" href="gameMgmt.html">Game Management</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Trivia from Home</h1>
+<br>
+    <form action="account.html" method="POST">
+        <label for="text">Username </label>
+        <input type="text" name="text_input" id="text">
+        <label for="password">Password </label>
+        <input type="password" name="password_input" id="password">
+        <input type="submit" value="Submit">
+    </form>
+<br>
+    <form action="game.html">
+        <label for="gameType">Choose a Game Type:</label>
+        <select id="game" name="game">
+          <option value="sports">Sports</option>
+          <option value="science">Science</option>
+          <option value="history">History</option>
+          <option value="food">Food</option>
+        </select>&thinsp;
+        <input type="submit">
+      </form>
+</body>
+
+</html>
