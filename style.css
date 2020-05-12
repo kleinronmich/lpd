@@ -13,7 +13,7 @@ body {
 }
 
 .navbar {
-    background-color: #3474EB;
+    background-color: #4B0082;
     font-weight: bold;
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 .nav.navbar-nav .dropdown-menu li a {
-    color: #3474EB;
+    color: #4B0082;
     border-left: solid 1px white;
     border-right: solid 1px white;
 }
@@ -41,12 +41,6 @@ h1 {
     font-weight: 700;
     font-size: 5em;
     text-align: center;
-    color: #3474EB;
+    color: #4B0082;
     font-size: 60px;
 }
-
-/* h2 {
-    text-align: center;
-    color: #3474EB;
-    font-weight: 700;
-} */
