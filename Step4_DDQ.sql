@@ -26,6 +26,11 @@ CREATE TABLE `season_teams` (
 `season_id` int,
 `team_id` int,
 `made_playoffs` boolean NOT NULL,
+`wins` int,
+`losses` int,
+`ties  ` int,
+`points_scored` FLOAT(10),
+`points_against` FLOAT(10),
 PRIMARY KEY (season_id, team_id),
 FOREIGN KEY (season_id) REFERENCES seasons(season_id),
 FOREIGN KEY (team_id) REFERENCES teams(team_id)
