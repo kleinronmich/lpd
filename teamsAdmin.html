@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<html lang="en">
+<!-- comment -->
 
 <head>
-    <meta charset=“utf-8”>
-    <title>Player Standings</title>
+    <meta charset="UTF-8">
+    <title>Account</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="public/style.css">
 </head>
@@ -41,47 +43,42 @@
             </div>
         </div>
     </nav>
-                <table class="table">
-                    <legend>Overall LDP Standings {Filter by columns?}</legend>
-                    <thead>
-                        <th scope="col">Team</th>
-                        <th scope="col">Wins</th>
-                        <th scope="col">Losses</th>
-                        <th scope="col">Ties</th>
-                        <th scope="col">Winning %</th>
-                        <th scope = "col">Playoffs Made</th>
-                        <th scope = "col">Championships</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Bolton</th>
-                            <td>100</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>1.0</td>
-                            <td>8</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Ron</th>
-                            <td>75</td>
-                            <td>25</td>
-                            <td>0</td>
-                            <td>.725</td>
-                            <td>7</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <th scope = "row">Zell</th>
-                            <td>0</td>
-                            <td>100</td>
-                            <td>0</td>
-                            <td>.0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+<h3>Add a Team</h3>
+<!-- Add Row Form -->
+<!-- First Name, Last Name, Active Member, submit button -->
+<form>
+    <input type="text" name="first_name">
+    <input type="text" name="last_name">
+    <input type="checkbox" name="active_member">
+    <input type="submit" value="submit">
+</form>
+
+<!-- Table of Data -->
+<!-- Rows with id, first name, last name, active member, update button, delete button -->
+<h3>Current Teams</h3>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Active Member</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <form>
+            <td><input type="text" name="id" value ="Example"></td>
+            <td><input type="text" name="first_name" value ="Example"></td>
+            <td><input type="text" name="last_name" value ="Example"></td>
+            <td><input type="text" name="active_member" value ="Example"></td>
+            <td><button>Update</button></td>
+            <td><button>Delete</button></td>
+        </form>
+    </tr>
+</table>
+
+  <script type="text/javascript" src="public/teamsAdmin.js"></script>
 </body>
 
 </html>
