@@ -1,5 +1,5 @@
-const baseURL = `https://flip2.engr.oregonstate.edu:5065`;
-//const baseURL = `localhost:5064`;
+//const baseURL = `https://flip2.engr.oregonstate.edu:5065`;
+const baseURL = `https://localhost:5064`;
 
 document.addEventListener('DOMContentLoaded', (event) => {
 var req = new XMLHttpRequest();
