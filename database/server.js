@@ -3,13 +3,13 @@ var express = require('express');
 var app = express();
 var cors = require('cors');
 const path = require('path');
-app.use(express.static(__dirname));
+//app.use(express.static(__dirname));
 app.use(cors());
 
 
 app.get("/", function(req, res) {
 
-res.sendFile(path.join(__dirname + '/../index.html'));
+res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 //Query to load all teams rows and send as a JSON string
@@ -121,6 +121,6 @@ app.get("/loadMatchups", function(req, res) {
 
 
 
-app.listen(5065, function() {
+app.listen(5064, function() {
     console.log("App listening on port 5065");
 });
