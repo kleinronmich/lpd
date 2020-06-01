@@ -1,3 +1,39 @@
-/* example css */
-
-/* this is a change */
+body {
+    background-size: cover;
+    background-position: center;
+    padding-top: 50px;
+}
+.navbar-header .navbar-brand {
+    color: white;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background: white;
+}
+.navbar {
+    background-color: #4B0082;
+    font-weight: bold;
+}
+.nav.navbar-nav li a {
+    color: white;
+    border-left: solid 1px white;
+    border-right: solid 1px white;
+}
+.nav.navbar-nav .dropdown-menu li a {
+    color: #4B0082;
+    border-left: solid 1px white;
+    border-right: solid 1px white;
+}
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-family: "Lato";
+    color: #7D97AD;
+}
+h1 {
+    font-weight: 700;
+    font-size: 5em;
+    text-align: center;
+    color: #4B0082;
+    font-size: 60px;
+}

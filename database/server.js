@@ -9,7 +9,8 @@ app.use(cors());
 
 app.get("/", function(req, res) {
 
-res.sendFile(path.join(__dirname + '/index.html'));
+//res.sendFile(path.join(__dirname + '/index.html'));
+res.send("Console is running");
 });
 
 //Query to load all teams rows and send as a JSON string
@@ -122,5 +123,5 @@ app.get("/loadMatchups", function(req, res) {
 
 
 app.listen(5064, function() {
-    console.log("App listening on port 5065");
+    console.log("App listening on port 5064");
 });
