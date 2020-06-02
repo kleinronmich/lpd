@@ -1,62 +1,72 @@
 const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
-//const baseURL = `https://localhost:5064`;
+//const baseURL = `http://localhost:5064`;
+
+var payload = {};
 
 document.addEventListener('DOMContentLoaded', (event) => {
-var req = new XMLHttpRequest();
-req.open("GET", baseURL + "/loadTeams", true);
-	req.setRequestHeader('Content-Type', 'application/json');
-	req.addEventListener('load',function(){
-		if(req.status >= 200 && req.status < 400){
-			console.log(JSON.parse(req.responseText));
-		}
-		else {
-			console.log("Error in network request: " + req.statusText);
-		}
-	});
-	req.send();
-	event.preventDefault();
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadTeams", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        console.log(req)
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeTable(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
 });
 
-// const makeTable = (allRows) => {
-//     //Itereate over the rows
-//         //add table data cells each with data
-//         //add the buttons
-// }
+const makeTable = (allRows) => {
+    var body = document.getElementsByTagName("body")[0];
+    var tbl = document.createElement("table");
+    var tblBody = document.createElement("tbody");
 
-// const makeRow = (row) => {
-//     //row would be an object with all the properties
-//     //use data in row to create table data cells
-//     //make the form that wraps the table data cells
-//     //append each of the cells
-// }
+    tbl.className = "table";
 
-// const makeCell = (data) => {
-//     //create a table data cell and add attributes (like a class for example)
-// }
 
-// const makeInput = (data) => {
-//     //creates form input
-// }
+    for (var i = 0; i < allRows.length + 1; i++) {
+        if (i == 0) {
+            let headers = Object.keys(allRows[0]);
+            makeHeader(tblBody, headers);
+        } else {
+            makeRow(tblBody, payload[i - 1]);
+        }
+    }
 
-// //check Event Delegation documentation
-// const table = document.getElementById("table"); //get element that is the table
-// table.addEventListener('click', (event) => {
-//     //handle event depending on what it got
-//     let target = event.target;
-//     //if it's an update button, send a PUT request to the server
-//     //if it's a delete button, send a DELETE request to the server
-// });
+    tbl.appendChild(tblBody);
+    body.appendChild(tbl);
 
-// const onUpdate = () {
-//     //send update request to server
+};
 
-//     //delete table
-//     //make table again
-// }
+const makeHeader = (tblBody, columns) => {
+    var newRow = document.createElement("tr");
 
-// const onDelete = () {
-//     //send delete request to server
+    for (let key of columns) {
+        var headerCell = document.createElement("th");
+        var headerCellText = document.createTextNode(key);
+        headerCell.appendChild(headerCellText);
+        newRow.appendChild(headerCell);
+    }
+    tblBody.appendChild(newRow);
+};
 
-//     //delete table
-//     //make table again
-// }
+
+
+const makeRow = (tblBody, row) => {
+
+    var newRow = document.createElement("tr");
+
+
+    for (const col in row) {
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(row[col]);
+        cell.appendChild(cellText);
+        newRow.appendChild(cell);
+    }
+    tblBody.appendChild(newRow);
+
+};
