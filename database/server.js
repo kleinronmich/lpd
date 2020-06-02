@@ -9,19 +9,19 @@ app.use(cors());
 
 app.get("/", function(req, res) {
 
-//res.sendFile(path.join(__dirname + '/index.html'));
-res.send("Console is running");
+    //res.sendFile(path.join(__dirname + '/index.html'));
+    res.send("Console is running");
 });
 
 //Query to load all teams rows and send as a JSON string
 app.get("/loadTeams", function(req, res) {
 
     var q = "SELECT * from teams";
-    
+
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
         res.send(JSON.stringify(rows));
-});
+    });
 });
 
 
@@ -38,11 +38,11 @@ app.get("/loadTeams", function(req, res) {
 app.get("/loadSeasons", function(req, res) {
 
     var q = "SELECT * from seasons";
-    
+
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
         res.send(JSON.stringify(rows));
-});
+    });
 });
 
 
@@ -54,11 +54,11 @@ app.get("/loadSeasons", function(req, res) {
 app.get("/loadSeasonTeams", function(req, res) {
 
     var q = "SELECT * from season_teams";
-    
+
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
-        res.send(JSON.stringify(rows));
-});
+        res.json(rows);
+    });
 });
 
 
@@ -70,11 +70,11 @@ app.get("/loadSeasonTeams", function(req, res) {
 app.get("/loadDues", function(req, res) {
 
     var q = "SELECT * from league_dues";
-    
+
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
         res.send(JSON.stringify(rows));
-});
+    });
 });
 
 
@@ -86,11 +86,11 @@ app.get("/loadDues", function(req, res) {
 app.get("/loadMatchups", function(req, res) {
 
     var q = "SELECT * from matchups";
-    
+
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
         res.send(JSON.stringify(rows));
-});
+    });
 });
 
 
