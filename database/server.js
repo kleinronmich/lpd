@@ -57,7 +57,7 @@ app.get("/loadSeasonTeams", function(req, res) {
 
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
-        res.json(rows);
+        res.send(JSON.stringify(rows));
     });
 });
 
