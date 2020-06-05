@@ -67,7 +67,7 @@ app.get("/loadSeasonTeams", function(req, res) {
 
 
 //Query to load all league dues rows and send as a JSON string
-app.get("/loadDues", function(req, res) {
+app.get("/loadWinnings", function(req, res) {
 
     var q = "SELECT * from league_dues";
 
@@ -79,6 +79,15 @@ app.get("/loadDues", function(req, res) {
 
 
 //Query to insert into league_dues table on Dues Admin page
+app.get("/loadDues", function(req, res) {
+
+    var q = "SELECT * from league_dues";
+
+    mysql.pool.query(q, function(err, rows, fields) {
+        if (err) throw err;
+        res.send(JSON.stringify(rows));
+    });
+});
 
 
 
