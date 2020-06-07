@@ -1,4 +1,5 @@
 -- Create Tables
+SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
@@ -63,6 +64,7 @@ FOREIGN KEY (home_team_id) REFERENCES teams(team_id),
 FOREIGN KEY (away_team_id) REFERENCES teams(team_id)
 ) ENGINE=InnoDB;
 
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- Insert into Teams - all values
 INSERT INTO teams (first_name, last_name, active_member) VALUES
@@ -70,8 +72,8 @@ INSERT INTO teams (first_name, last_name, active_member) VALUES
 ('Justin', 'Gatt', 1), ('Derek', 'Tinkle', 1), ('Matt', 'Colville', 1), ('Neil', 'Arthur', 1),
 ('Zell', 'Zoerhof', 1), ('Adam', 'Kunkel', 1), ('Mitch', 'Goncalves', 1), ('Nate', 'Maziar', 1),
 ('Kurt', 'Peters', 0), ('Jon', 'Habshoosh', 0), ('Danny', 'Kaafrani', 0), ('Amos', 'Goldstein', 0),
-('Danny', 'Ackerman', 0), ('Kyle', 'Tennenbaum', 0), ('Sam', 'Miller', 0), ('Joe', 'Demery', 0),
-('Alex', 'Benfield', 0), ('Will', 'Timmer', 0);
+('Danny', 'Ackerman', 0), ('Kyle', 'Tenenbaum', 0), ('Sam', 'Miller', 0), ('Joe', 'Demery', 0),
+('Alex', 'Benfield', 0), ('Will', 'Timmer', 0), ('Shamik', 'Patel', 0);
 
 -- Insert into Seasons
 INSERT INTO seasons (year, championship_team_id, runner_up_id) VALUES
