@@ -162,7 +162,7 @@ app.post('/insertMatchup',function(req,res,next){
 
     var {season_id, week, home_team_id, away_team_id, home_team_score, away_team_score} = req.body;
     var q = "INSERT INTO matchups (`season_id`, `week`, `home_team_id`, `away_team_id`, `home_team_score`, `away_team_score`) VALUES (?,?,?,?,?,?)";
-    
+
     mysql.pool.query(q, [season_id, week, home_team_id, away_team_id, home_team_score, away_team_score], (err, result) => {
       if(err){
         next(err);
@@ -175,6 +175,22 @@ app.post('/insertMatchup',function(req,res,next){
 //Query to select the sums of overall winnings in a table for each team
 app.get("/loadWinnings", function(req, res) {
 
+    var q = "select first_name as 'First Name', last_name as 'Last Name', sum(amount) as Winnings from league_dues ld " +
+    "JOIN teams t ON t.team_id = ld.team_id " +
+    "GROUP BY 1,2 " +
+    "ORDER BY Winnings DESC";
+
+    mysql.pool.query(q, function(err, rows, fields) {
+        if (err) throw err;
+        res.send(JSON.stringify(rows));
+    });
+});
+
+
+//Load Team names into a dropdown, on button click grab records by year
+//Query to select overall records for selected team on Teams page
+app.get("/loadRecords", function(req, res) {
+
     var q = "SELECT * from league_dues";
 
     mysql.pool.query(q, function(err, rows, fields) {
@@ -183,12 +199,8 @@ app.get("/loadWinnings", function(req, res) {
     });
 });
 
-//Query to select overall records for selected team on Teams page
 
-
-
-//Query to select overall records for all teams based on criteria
-//on the Standings page
+//Query to select overall records for all teams based on criteria on the Standings page
 
 
 //Query to select all matchups between two selected temas
