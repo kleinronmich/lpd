@@ -70,33 +70,3 @@ const makeRow = (tblBody, row) => {
     tblBody.appendChild(newRow);
 
 };
-
-
-
-// const makeCell = (data) => {
-//     //create a table data cell and add attributes (like a class for example)
-// }
-
-
-// //check Event Delegation documentation
-// const table = document.getElementById("table"); //get element that is the table
-// table.addEventListener('click', (event) => {
-//     //handle event depending on what it got
-//     let target = event.target;
-//     //if it's an update button, send a PUT request to the server
-//     //if it's a delete button, send a DELETE request to the server
-// });
-
-// const onUpdate = () {
-//     //send update request to server
-
-//     //delete table
-//     //make table again
-// }
-
-// const onDelete = () {
-//     //send delete request to server
-
-//     //delete table
-//     //make table again
-// }
