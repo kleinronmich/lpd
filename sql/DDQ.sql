@@ -28,7 +28,7 @@ CREATE TABLE `season_teams` (
 `made_playoffs` boolean NOT NULL,
 `wins` int,
 `losses` int,
-`ties  ` int,
+`ties` int,
 `points_scored` FLOAT(10),
 `points_against` FLOAT(10),
 PRIMARY KEY (season_id, team_id),
