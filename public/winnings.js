@@ -5,7 +5,7 @@ var payload = {};
 
 document.addEventListener('DOMContentLoaded', (event) => {
     var req = new XMLHttpRequest();
-    req.open("GET", baseURL + "/loadDues", true);
+    req.open("GET", baseURL + "/loadWinnings", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
         console.log(req)
