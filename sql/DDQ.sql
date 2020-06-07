@@ -1,4 +1,4 @@
---Create Tables
+-- Create Tables
 
 DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
@@ -86,7 +86,7 @@ INSERT INTO seasons (year, championship_team_id, runner_up_id) VALUES
 (2018, (SELECT team_id FROM teams WHERE last_name='Klein'), (SELECT team_id FROM teams WHERE last_name='Tinkle')),
 (2019, (SELECT team_id FROM teams WHERE last_name='Maziar'), (SELECT team_id FROM teams WHERE last_name='Colville'));
 
---Insert into Teams in Seasons
+-- Insert into Teams in Seasons
 INSERT INTO season_teams (season_id, team_id, made_playoffs, wins, losses, ties, points_scored, points_against) VALUES
 ((SELECT season_id from seasons WHERE year=2019), (SELECT team_id FROM teams WHERE last_name='Maziar'), 1, 8, 5, 0, 1190.98, 1179.66),
 ((SELECT season_id from seasons WHERE year=2019), (SELECT team_id FROM teams WHERE last_name='Bolton'), 1, 7, 6, 0, 1187, 1176.28),
