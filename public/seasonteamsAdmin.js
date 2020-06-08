@@ -3,7 +3,13 @@ const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
 
 var payload = {};
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', bindbuttons);
+
+function bindbuttons() {
+    loadTable();
+}
+
+const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadSeasonTeams", true);
     req.setRequestHeader('Content-Type', 'application/json');
@@ -17,6 +23,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
     req.send();
+    event.preventDefault();
+}
+
+document.getElementById("insertSeasonTeam").addEventListener("click", () => {
+    var req = new XMLHttpRequest();
+    var updatePayload = { season_id: null, 
+                          team_id: null, 
+                          made_playoffs: null,
+                          wins: null,
+                          losses: null,
+                          ties: null,
+                          points_scored: null,
+                          points_against: null };
+
+    updatePayload.season_id = document.getElementById("season_id").value;
+    updatePayload.team_id = document.getElementById("team_id").value;
+    updatePayload.made_playoffs = document.getElementById("made_playoffs").value;
+    updatePayload.wins = document.getElementById("wins").value;
+    updatePayload.losses = document.getElementById("losses").value;
+    updatePayload.ties = document.getElementById("ties").value;
+    updatePayload.points_scored = document.getElementById("points_scored").value;
+    updatePayload.points_against = document.getElementById("points_against").value;
+
+    console.log(updatePayload);
+
+    req.open('POST', baseURL + "/insertSeasonTeam", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+
+    req.addEventListener("load", function() {
+        if (req.status >= 200 && req.status < 400) {
+            deleteTable();
+            loadTable();
+        } else {
+            var errorMessage = "Error: " + res.statusText;
+            console.log(errorMessage);
+        }
+    });
+    req.send(JSON.stringify(updatePayload));
     event.preventDefault();
 });
 
@@ -66,5 +110,14 @@ const makeRow = (tblBody, row) => {
         newRow.appendChild(cell);
     }
     tblBody.appendChild(newRow);
+};
 
+const deleteTable = () => {
+    try {
+        var tblRemove = document.getElementById("table");
+        tblRemove.remove(); 
+    }
+    catch{
+        location.reload();
+    }  
 };

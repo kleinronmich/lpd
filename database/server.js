@@ -44,7 +44,7 @@ app.post('/insertTeam', function(req,res,next){
 app.put('/updateTeam',function(req,res,next){
 
     var {first_name, last_name, active_member} = req.body;
-    var q = "UPDATE teams SET first_name=?, last_name=?, active_member=? WHERE id=?";
+    var q = "UPDATE teams SET first_name=?, last_name=?, active_member=? WHERE team_id=?";
 
     mysql.pool.query(q,[first_name, last_name, active_member], (err, result) => {
       if(err){
@@ -58,7 +58,7 @@ app.put('/updateTeam',function(req,res,next){
 //Query to delete from Teams table on Teams Admin page
 app.delete('/deleteTeam',function(req,res,next){
 
-    var q = "DELETE FROM teams WHERE id=?";
+    var q = "DELETE FROM teams WHERE team_id=?";
 
     mysql.pool.query(q, req.body.id, (err, result) => {
       if(err){
@@ -196,16 +196,26 @@ app.get("/loadWinnings", function(req, res) {
 
 
 //Load Team names into a dropdown, on button click grab records by year
-//Query to select overall records for selected team on Teams page
-app.get("/loadRecords", function(req, res) {
+app.get("/loadTeamNames", function(req, res) {
 
-    var q = "SELECT * from league_dues";
+    var q = "SELECT last_name from teams";
 
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
         res.send(JSON.stringify(rows));
     });
 });
+
+//Query to select overall records for selected team on Teams page
+// app.get("/loadRecords", function(req, res) {
+
+//     var q = "SELECT * from league_dues";
+
+//     mysql.pool.query(q, function(err, rows, fields) {
+//         if (err) throw err;
+//         res.send(JSON.stringify(rows));
+//     });
+// });
 
 
 //Query to select overall records for all teams based on criteria on the Standings page

@@ -1,5 +1,4 @@
 const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
-//const baseURL = `http://localhost:5064`;
 
 var payload = {};
 
@@ -50,7 +49,6 @@ document.getElementById("insertSeason").addEventListener("click", () => {
     });
     req.send(JSON.stringify(updatePayload));
     event.preventDefault();
-
 });
 
 const makeTable = (allRows) => {
@@ -99,7 +97,6 @@ const makeRow = (tblBody, row) => {
         newRow.appendChild(cell);
     }
     tblBody.appendChild(newRow);
-
 };
 
 const deleteTable = () => {
