@@ -3,6 +3,11 @@ body {
     background-position: center;
     padding-top: 50px;
 }
+#ron {
+    width: 50%;
+    margin: auto;
+    border-style: solid;
+}
 .navbar-header .navbar-brand {
     color: white;
 }

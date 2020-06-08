@@ -26,7 +26,7 @@ const makeTable = (allRows) => {
     var tblBody = document.createElement("tbody");
 
     tbl.className = "table";
-    tbl.className = "ron";
+    tbl.id = "ron";
 
 
     for (var i = 0; i < allRows.length + 1; i++) {

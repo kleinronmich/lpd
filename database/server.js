@@ -43,10 +43,10 @@ app.post('/insertTeam', function(req,res,next){
 //Query to update Teams table on Teams Admin page
 app.put('/updateTeam',function(req,res,next){
 
-    var {first_name, last_name, active_member} = req.body;
+    var {team_id, first_name, last_name, active_member} = req.body;
     var q = "UPDATE teams SET first_name=?, last_name=?, active_member=? WHERE team_id=?";
 
-    mysql.pool.query(q,[first_name, last_name, active_member], (err, result) => {
+    mysql.pool.query(q,[first_name, last_name, active_member, team_id], (err, result) => {
       if(err){
         next(err);
         return;
