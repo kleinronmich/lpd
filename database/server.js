@@ -221,10 +221,11 @@ app.get("/loadTeamNames", function(req, res) {
 //Query to select overall records for all teams based on criteria on the Standings page
 app.get("/loadStandings", function(req, res) {
 
-    var q = "select first_name as 'First Name', last_name as 'Last Name', sum(amount) as Winnings from league_dues ld " +
-    "JOIN teams t ON t.team_id = ld.team_id " +
-    "GROUP BY 1,2 " +
-    "ORDER BY Winnings DESC";
+    var q = "select first_name as 'First Name', last_name as 'Last Name', sum(wins) as Wins, sum(losses) as Losses, sum(ties) as Ties, " +
+    "CONCAT(CAST((sum(wins)*100/sum(wins+losses+ties)) AS CHAR(5)),'%') as WinningPct from season_teams st " +
+    "JOIN teams t ON t.team_id = st.team_id " +
+    "GROUP BY 1,2 " + 
+    "ORDER BY Wins DESC";
 
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
