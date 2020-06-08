@@ -46,7 +46,22 @@
     <h1>Admin Page for Seasons Table</h1>
     <h2>Add New Season</h2>
     <form>
-        <input type="number" name = "year">
+        <table>
+            <table>
+                <tr>
+                    <th>Year</th>
+                    <th>Championship Team ID</th>
+                    <th>Runner Up ID</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td><input type="number" name="year" id="year"></td>
+                    <td><input type="number" name="championship_team_id" id="championship_team_id"></td>
+                    <td><input type="number" name="runner_up_id" id="runner_up_id"></td>
+                    <td><input type="submit" id="insertSeason" value="Submit"></td>
+                </tr>
+            </table>
+        </table>
     </form>
 
     <h2>Seasons Table</h2>

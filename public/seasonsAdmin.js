@@ -3,7 +3,13 @@ const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
 
 var payload = {};
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', bindbuttons);
+
+function bindbuttons() {
+    loadTable();
+}
+
+const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadSeasons", true);
     req.setRequestHeader('Content-Type', 'application/json');
@@ -18,6 +24,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
     req.send();
     event.preventDefault();
+}
+
+document.getElementById("insertSeason").addEventListener("click", () => {
+    var req = new XMLHttpRequest();
+    var updatePayload = { year: null, championship_team_id: null, runner_up_id: null};
+
+    updatePayload.year = document.getElementById("year").value;
+    updatePayload.championship_team_id = document.getElementById("championship_team_id").value;
+    updatePayload.runner_up_id = document.getElementById("runner_up_id").value;
+
+    console.log(updatePayload);
+
+    req.open('POST', baseURL + "/insertSeason", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+
+    req.addEventListener("load", function() {
+        if (req.status >= 200 && req.status < 400) {
+            var resPayload = {}
+            resPayload = JSON.parse(req.responseText);
+            deleteTable();
+            loadTable();
+        } else {
+            var errorMessage = "Error: " + res.statusText;
+            console.log(errorMessage);
+        }
+    });
+    req.send(JSON.stringify(updatePayload));
+    event.preventDefault();
+
 });
 
 const makeTable = (allRows) => {
@@ -69,4 +104,14 @@ const makeRow = (tblBody, row) => {
     }
     tblBody.appendChild(newRow);
 
+};
+
+const deleteTable = () => {
+    try {
+        var tblRemove = document.getElementById("table");
+        tblRemove.remove(); 
+    }
+    catch{
+        location.reload();
+    }  
 };
