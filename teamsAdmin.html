@@ -47,36 +47,34 @@
 <h3>Add a Team</h3>
 <!-- Add Row Form -->
 <!-- First Name, Last Name, Active Member, submit button -->
+<h2>Add A New Team</h2>
 <form>
-    <input type="text" name="first_name">
-    <input type="text" name="last_name">
-    <input type="checkbox" name="active_member">
-    <input type="submit" value="submit">
+    <table>
+            <tbody><tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Active Member</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td><input type="text" name="first_name" id="first_name"></td>
+                <td><input type="text" name="last_name" id="last_name"></td>
+                <td>
+                    <input type="radio" name="active_member" id="active" value="1">
+                    <label for="active_member">Active</label>
+                    <input type="radio" name="active_member" id="inactive" value="0">
+                    <label for="inactive_member">Inactive</label>
+                </td>
+                <td><input type="submit" id="insertTeam" value="Submit"></td><td></td>
+            </tr>
+        </tbody></table>
+    
 </form>
 
 <!-- Table of Data -->
 <!-- Rows with id, first name, last name, active member, update button, delete button -->
 <h3>Current Teams</h3>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Active Member</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr>
-        <form>
-            <td><input type="text" name="id" value ="Example"></td>
-            <td><input type="text" name="first_name" value ="Example"></td>
-            <td><input type="text" name="last_name" value ="Example"></td>
-            <td><input type="text" name="active_member" value ="Example"></td>
-            <td><button>Update</button></td>
-                <td><button>Delete</button></td>
-                </form>
-                </tr>
-                </table>
+
 
                 <script type="text/javascript" src="public/teamsAdmin.js"></script>
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
