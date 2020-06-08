@@ -87,8 +87,6 @@ const makeHeader = (tblBody, columns) => {
     tblBody.appendChild(newRow);
 };
 
-
-
 const makeRow = (tblBody, row) => {
 
     var newRow = document.createElement("tr");

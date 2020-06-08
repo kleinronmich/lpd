@@ -38,6 +38,7 @@ app.post('/insertTeam', function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
@@ -79,18 +80,6 @@ app.get("/loadSeasons", function(req, res) {
     });
 });
 
-const getAllData = (res) => {
-
-    var q = "SELECT * from seasons";
-    mysql.pool.query(q, (err, rows, fields) => {
-      if (err){
-        next(err);
-        return
-      }
-      res.send(JSON.stringify(rows));
-    });
-  };
-
 //Query to insert into seasons table on Seasons Admin page
 app.post('/insertSeason', function(req,res,next){
 
@@ -130,6 +119,7 @@ app.post('/insertSeasonTeam', function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
@@ -157,6 +147,7 @@ app.post('/insertDues', function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
@@ -184,6 +175,7 @@ app.post('/insertMatchup',function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
