@@ -222,7 +222,8 @@ app.get("/loadTeamNames", function(req, res) {
 app.get("/loadStandings", function(req, res) {
 
     var q = "select first_name as 'First Name', last_name as 'Last Name', sum(wins) as Wins, sum(losses) as Losses, sum(ties) as Ties, " +
-    "CONCAT(CAST((sum(wins)*100/sum(wins+losses+ties)) AS CHAR(5)),'%') as WinningPct from season_teams st " +
+    "CONCAT(CAST((sum(wins)*100/sum(wins+losses+ties)) AS CHAR(5)),'%') as WinningPct, " +
+    "sum(made_playoffs) as 'Playoff Appearances' from season_teams st " +
     "JOIN teams t ON t.team_id = st.team_id " +
     "GROUP BY 1,2 " + 
     "ORDER BY Wins DESC";
