@@ -44,18 +44,41 @@
     </nav>
 
     <h1>Admin Page for Season Teams Table</h1>
-    <h3>Insert Form</h3>
+    <h3>Add Season Teams</h3>
     <form>
-        <input type="number" name="team_id" >
-        <input type="text" name="made_playoffs">
-        <input type="number" name = "wins">
-        <input type="number" name = "losses">
-        <input type="number" name="ties">
-        <input type="number" name="points_scored">
-        <input type="number" name = "points_against">
+        <table>
+            <table>
+                <tr>
+                    <th>Season ID</th>
+                    <th>Team ID</th>
+                    <th>Made Playoffs?</th>
+                    <th>Wins</th>
+
+                </tr>
+                <tr>
+                    <td><input type="number" name="season_id" id="season_id"></td>
+                    <td><input type="number" name="team_id" id="team_id"></td>
+                    <td><input type="number" name="made_playoffs" id="made_playoffs"></td>
+                    <td><input type="number" name="wins" id="wins"></td>
+                </tr>
+                <tr>
+                    <th>Losses</th>
+                    <th>Ties</th>
+                    <th>Points Scored</th>
+                    <th>Points Against</th>
+                </tr>
+                <tr>
+                    <td><input type="number" name="losses" id="losses"></td>
+                    <td><input type="number" name="ties" id="ties"></td>
+                    <td><input type="number" name="points_scored" id="points_scored"></td>
+                    <td><input type="number" name="points_against" id="points_against"></td>
+                    <td><input type="submit" id="insertSeasonTeam" value="Submit"></td>
+                </tr>
+            </table>
+        </table>
     </form>
 
-    <h3>Current Data Table</h3>
+    <h3>Season Teams Table</h3>
 
 
 <script type="text/javascript" src="public/seasonteamsAdmin.js"></script>

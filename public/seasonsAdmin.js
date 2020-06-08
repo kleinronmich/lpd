@@ -99,7 +99,6 @@ const makeRow = (tblBody, row) => {
         newRow.appendChild(cell);
     }
     tblBody.appendChild(newRow);
-
 };
 
 const deleteTable = () => {
