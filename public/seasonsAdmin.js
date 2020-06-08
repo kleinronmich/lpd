@@ -1,5 +1,4 @@
 const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
-//const baseURL = `http://localhost:5064`;
 
 var payload = {};
 
