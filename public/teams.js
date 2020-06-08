@@ -26,9 +26,12 @@ const loadDropdown = () => {
 }
 
 const makeDropdown = (rows) => {
-    var dropdown = document.createElement("form");
+    var sel = document.getElementById('nameDropdown');
     for (const col in rows)
     {
-        console.log(rows[col].last_name);
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.value=rows[col].last_name;
+        sel.appendChild(opt);
     }
 }
