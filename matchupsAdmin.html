@@ -44,7 +44,35 @@
     </nav>
 
     <h1>Admin Page for Matchup Table</h1>
-    <h3>Insert Match Form</h3>
+    <h3>Insert Matchup</h3>
+    <form>
+        <table>
+            <table>
+                <tr>
+                    <th>Season ID</th>
+                    <th>Home Team ID</th>
+                    <th>Away Team ID</th>
+
+                </tr>
+                <tr>
+                    <td><input type="number" name="season_id" id="season_id"></td> 
+                    <td><input type="number" name="home_team_id" id="home_team_id"></td>
+                    <td><input type="number" name="away_team_id" id="away_team_id"></td>
+                </tr>
+                <tr>
+                    <th>Week</th>
+                    <th>Home Team Score</th>
+                    <th>Away Team Score</th>
+                </tr>
+                <tr>
+                    <td><input type="number" name="week" id="week"></td>
+                    <td><input type="number" name="home_team_score" id="home_team_score"></td>
+                    <td><input type="number" name="away_team_score" id="away_team_score"></td>
+                    <td><input type="submit" id="insertMatchup" value="Submit"></td>
+                </tr>
+            </table>
+        </table>
+    </form>
     <h3>Current Matchups in Database</h3>
 
     <script type="text/javascript" src="public/matchupsAdmin.js"></script>

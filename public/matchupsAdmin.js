@@ -3,7 +3,13 @@ const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
 
 var payload = {};
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', bindbuttons);
+
+function bindbuttons() {
+    loadTable();
+}
+
+const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadMatchups", true);
     req.setRequestHeader('Content-Type', 'application/json');
@@ -17,6 +23,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
     req.send();
+    event.preventDefault();
+}
+
+document.getElementById("insertMatchup").addEventListener("click", () => {
+    var req = new XMLHttpRequest();
+    var updatePayload = { season_id: null, 
+                          week: null, 
+                          home_team_id: null,
+                          away_team_id: null,
+                          home_team_score: null,
+                          away_team_score: null };
+
+    updatePayload.season_id = document.getElementById("season_id").value;
+    updatePayload.week = document.getElementById("week").value;
+    updatePayload.home_team_id = document.getElementById("home_team_id").value;
+    updatePayload.away_team_id = document.getElementById("away_team_id").value;
+    updatePayload.home_team_score = document.getElementById("home_team_score").value;
+    updatePayload.away_team_score = document.getElementById("away_team_score").value;
+
+    console.log(updatePayload);
+
+    req.open('POST', baseURL + "/insertMatchup", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+
+    req.addEventListener("load", function() {
+        if (req.status >= 200 && req.status < 400) {
+            deleteTable();
+            loadTable();
+        } else {
+            var errorMessage = "Error: " + res.statusText;
+            console.log(errorMessage);
+        }
+    });
+    req.send(JSON.stringify(updatePayload));
     event.preventDefault();
 });
 
@@ -68,5 +108,14 @@ const makeRow = (tblBody, row) => {
         newRow.appendChild(cell);
     }
     tblBody.appendChild(newRow);
+};
 
+const deleteTable = () => {
+    try {
+        var tblRemove = document.getElementById("table");
+        tblRemove.remove(); 
+    }
+    catch{
+        location.reload();
+    }  
 };

@@ -62,7 +62,6 @@ document.getElementById("insertSeasonTeam").addEventListener("click", () => {
     });
     req.send(JSON.stringify(updatePayload));
     event.preventDefault();
-
 });
 
 const makeTable = (allRows) => {
