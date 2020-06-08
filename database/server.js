@@ -3,6 +3,9 @@ var express = require('express');
 var app = express();
 var cors = require('cors');
 const path = require('path');
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(cors());
 
 
@@ -76,6 +79,18 @@ app.get("/loadSeasons", function(req, res) {
     });
 });
 
+const getAllData = (res) => {
+
+    var q = "SELECT * from seasons";
+    mysql.pool.query(q, (err, rows, fields) => {
+      if (err){
+        next(err);
+        return
+      }
+      res.send(JSON.stringify(rows));
+    });
+  };
+
 //Query to insert into seasons table on Seasons Admin page
 app.post('/insertSeason', function(req,res,next){
 
@@ -87,6 +102,7 @@ app.post('/insertSeason', function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
