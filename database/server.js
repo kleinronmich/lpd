@@ -53,6 +53,7 @@ app.put('/updateTeam',function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
@@ -66,6 +67,7 @@ app.delete('/deleteTeam',function(req,res,next){
         next(err);
         return;
       }
+      res.sendStatus(200);
     });
   });
 
