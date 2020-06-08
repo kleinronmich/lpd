@@ -41,8 +41,6 @@ document.getElementById("insertSeason").addEventListener("click", () => {
 
     req.addEventListener("load", function() {
         if (req.status >= 200 && req.status < 400) {
-            var resPayload = {}
-            resPayload = JSON.parse(req.responseText);
             deleteTable();
             loadTable();
         } else {
