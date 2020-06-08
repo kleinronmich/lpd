@@ -25,6 +25,10 @@ const loadDropdown = () => {
     event.preventDefault();
 }
 
-const makeDropdown = () => {
+const makeDropdown = (rows) => {
     var dropdown = document.createElement("form");
+    for (const col in rows)
+    {
+        console.log(rows[col].last_name);
+    }
 }
