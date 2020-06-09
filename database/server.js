@@ -198,7 +198,7 @@ app.get("/loadWinnings", function(req, res) {
 //Load Team names into a dropdown, on button click grab records by year
 app.get("/loadTeamNames", function(req, res) {
 
-    var q = "SELECT last_name from teams";
+    var q = "SELECT team_id, last_name from teams";
 
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
@@ -226,7 +226,7 @@ app.get("/loadStandings", function(req, res) {
     "sum(made_playoffs) as 'Playoff Appearances' from season_teams st " +
     "JOIN teams t ON t.team_id = st.team_id " +
     "GROUP BY 1,2 " + 
-    "ORDER BY Wins DESC";
+    "ORDER BY Wins DESC, WinningPct DESC";
 
     mysql.pool.query(q, function(err, rows, fields) {
         if (err) throw err;
