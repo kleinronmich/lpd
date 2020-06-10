@@ -6,8 +6,87 @@ var payload = {};
 document.addEventListener('DOMContentLoaded', bindbuttons);
 
 function bindbuttons() {
+    loadSeasonDropDown();
+    loadTeamDropDown();
+    makeWeekDropDown();
     loadTable();
-}
+};
+
+const loadSeasonDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadSeasonsAndIDs", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeYearDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const loadTeamDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadTeamNames", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeHomeDropdown(payload);
+            makeAwayDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const makeYearDropdown = (rows) => {
+    var sel = document.getElementById('yearDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].year;
+        opt.value = rows[col].season_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeHomeDropdown = (rows) => {
+    var sel = document.getElementById('homeDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].last_name;
+        opt.value = rows[col].team_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeAwayDropdown = (rows) => {
+    var sel = document.getElementById('awayDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].last_name;
+        opt.value = rows[col].team_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeWeekDropDown = () => {
+    var sel = document.getElementById('weekDropdown');
+    for (var i = 1; i < 14; i++) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(i));
+        opt.value = i;
+        sel.appendChild(opt);
+    };
+};
 
 const loadTable = () => {
     var req = new XMLHttpRequest();
@@ -36,10 +115,22 @@ document.getElementById("insertMatchup").addEventListener("click", () => {
         away_team_score: null
     };
 
-    updatePayload.season_id = document.getElementById("season_id").value;
-    updatePayload.week = document.getElementById("week").value;
-    updatePayload.home_team_id = document.getElementById("home_team_id").value;
-    updatePayload.away_team_id = document.getElementById("away_team_id").value;
+    var yearDropDown = document.getElementById("yearDropdown");
+    year = yearDropDown.options[yearDropDown.selectedIndex].value;
+    updatePayload.season_id = year;
+
+    var weekDropdown = document.getElementById("weekDropdown");
+    week = weekDropdown.options[weekDropdown.selectedIndex].value;
+    updatePayload.week = week;
+
+    var hometeamDropDown = document.getElementById("homeDropdown");
+    home_team = hometeamDropDown.options[hometeamDropDown.selectedIndex].value;
+    updatePayload.home_team_id = home_team;
+
+    var awayteamDropDown = document.getElementById("awayDropdown");
+    away_team = awayteamDropDown.options[awayteamDropDown.selectedIndex].value;
+    updatePayload.away_team_id = away_team;
+
     updatePayload.home_team_score = document.getElementById("home_team_score").value;
     updatePayload.away_team_score = document.getElementById("away_team_score").value;
 
