@@ -6,15 +6,70 @@ var payload = {};
 document.addEventListener('DOMContentLoaded', bindbuttons);
 
 function bindbuttons() {
+    loadSeasonDropDown();
+    loadTeamDropDown();
     loadTable();
-}
+};
+
+const loadTeamDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadTeamNames", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeNameDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const loadSeasonDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadSeasonsAndIDs", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeYearDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const makeNameDropdown = (rows) => {
+    var sel = document.getElementById('nameDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].last_name;
+        opt.value = rows[col].team_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeYearDropdown = (rows) => {
+    var sel = document.getElementById('yearDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].year;
+        opt.value = rows[col].season_id;
+        sel.appendChild(opt);
+    }
+};
 
 const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadDues", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
-        console.log(req)
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
             makeTable(payload);
@@ -28,10 +83,18 @@ const loadTable = () => {
 
 document.getElementById("insertDues").addEventListener("click", () => {
     var req = new XMLHttpRequest();
-    var updatePayload = { season_id: null, team_id: null, amount: null};
+    var updatePayload = { season_id: null, team_id: null, amount: null };
 
-    updatePayload.season_id = document.getElementById("season_id").value;
-    updatePayload.team_id = document.getElementById("team_id").value;
+    var yearDropDown = document.getElementById("yearDropdown");
+    year = yearDropDown.options[yearDropDown.selectedIndex].value;
+    updatePayload.season_id = year;
+
+
+    var teamDropDown = document.getElementById("nameDropdown");
+    team = teamDropDown.options[teamDropDown.selectedIndex].value;
+    updatePayload.team_id = team;
+
+
     updatePayload.amount = document.getElementById("amount").value;
 
     console.log(updatePayload);
@@ -105,9 +168,8 @@ const makeRow = (tblBody, row) => {
 const deleteTable = () => {
     try {
         var tblRemove = document.getElementById("table");
-        tblRemove.remove(); 
-    }
-    catch{
+        tblRemove.remove();
+    } catch {
         location.reload();
-    }  
+    }
 };
