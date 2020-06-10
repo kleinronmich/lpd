@@ -1,6 +1,3 @@
-/* Over the weekend the team has pivoted to a fantasty football stat tracking for our league that has been running for 10 years. We are in the middle of redefining the HTML structure and how the data will be presented. We believe we have the DDQ pretty well defined, we now need to finish these queries 
-*/
-
 -- Query to add in a new matchup for the given year (Admin Page)
 INSERT INTO matchups (season_id, week, home_team_id, away_team_id, home_team_score, away_team_score) VALUES
 ((SELECT season_id FROM seasons WHERE year=:), (:), (SELECT team_id FROM teams WHERE last_name=':'),(SELECT team_id FROM teams WHERE last_name=':'), (:home_team_score), (:away_team_score));
