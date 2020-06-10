@@ -5,15 +5,54 @@ var payload = {};
 document.addEventListener('DOMContentLoaded', bindbuttons);
 
 function bindbuttons() {
+    loadDropDowns()
     loadTable();
 }
+
+const loadDropDowns = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadTeamNames", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeChampionDropdown(payload);
+            makeRunnerDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const makeChampionDropdown = (rows) => {
+    var sel = document.getElementById('championDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].last_name;
+        opt.value = rows[col].team_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeRunnerDropdown = (rows) => {
+    var sel = document.getElementById('runnerDropdown');
+    for (const col in rows) {
+        var optR = document.createElement('option');
+        optR.appendChild(document.createTextNode(rows[col].last_name));
+        optR.label = rows[col].last_name;
+        optR.value = rows[col].team_id;
+        sel.appendChild(optR);
+    }
+};
 
 const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadSeasons", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
-        console.log(req)
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
             makeTable(payload);
@@ -27,11 +66,17 @@ const loadTable = () => {
 
 document.getElementById("insertSeason").addEventListener("click", () => {
     var req = new XMLHttpRequest();
-    var updatePayload = { year: null, championship_team_id: null, runner_up_id: null};
+    var updatePayload = { year: null, championship_team_id: null, runner_up_id: null };
 
     updatePayload.year = document.getElementById("year").value;
-    updatePayload.championship_team_id = document.getElementById("championship_team_id").value;
-    updatePayload.runner_up_id = document.getElementById("runner_up_id").value;
+
+    var champDropDown = document.getElementById("championDropdown");
+    champ_team_id = champDropDown.options[champDropDown.selectedIndex].value;
+    updatePayload.championship_team_id = champ_team_id;
+
+    var runnerDropDown = document.getElementById("runnerDropdown");
+    runner_team_id = runnerDropDown.options[runnerDropDown.selectedIndex].value;
+    updatePayload.runner_up_id = runner_team_id;
 
     console.log(updatePayload);
 
@@ -102,9 +147,8 @@ const makeRow = (tblBody, row) => {
 const deleteTable = () => {
     try {
         var tblRemove = document.getElementById("table");
-        tblRemove.remove(); 
-    }
-    catch{
+        tblRemove.remove();
+    } catch {
         location.reload();
-    }  
+    }
 };

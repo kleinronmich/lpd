@@ -1,4 +1,4 @@
-const baseURL = `http://flip3.engr.oregonstate.edu:2369`;
+const baseURL = `http://flip2.engr.oregonstate.edu:5065`;
 
 var payload = {};
 
