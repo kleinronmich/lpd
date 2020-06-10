@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     req.open("GET", baseURL + "/loadWinnings", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
-        console.log(req)
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
             makeTable(payload);

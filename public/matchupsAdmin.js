@@ -14,7 +14,6 @@ const loadTable = () => {
     req.open("GET", baseURL + "/loadMatchups", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
-        console.log(req)
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
             makeTable(payload);
@@ -28,12 +27,14 @@ const loadTable = () => {
 
 document.getElementById("insertMatchup").addEventListener("click", () => {
     var req = new XMLHttpRequest();
-    var updatePayload = { season_id: null, 
-                          week: null, 
-                          home_team_id: null,
-                          away_team_id: null,
-                          home_team_score: null,
-                          away_team_score: null };
+    var updatePayload = {
+        season_id: null,
+        week: null,
+        home_team_id: null,
+        away_team_id: null,
+        home_team_score: null,
+        away_team_score: null
+    };
 
     updatePayload.season_id = document.getElementById("season_id").value;
     updatePayload.week = document.getElementById("week").value;
@@ -113,9 +114,8 @@ const makeRow = (tblBody, row) => {
 const deleteTable = () => {
     try {
         var tblRemove = document.getElementById("table");
-        tblRemove.remove(); 
-    }
-    catch{
+        tblRemove.remove();
+    } catch {
         location.reload();
-    }  
+    }
 };
