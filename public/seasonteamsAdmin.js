@@ -6,15 +6,85 @@ var payload = {};
 document.addEventListener('DOMContentLoaded', bindbuttons);
 
 function bindbuttons() {
+    loadSeasonDropDown();
+    loadTeamDropDown();
+    PlayoffDropDown = [{ "text": "No", "value": 0 }, { "text": "Yes", "value": 1 }];
+    makePlayoffDropdown(PlayoffDropDown);
     loadTable();
-}
+};
+
+const loadTeamDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadTeamNames", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeNameDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const loadSeasonDropDown = () => {
+    var req = new XMLHttpRequest();
+    req.open("GET", baseURL + "/loadSeasonsAndIDs", true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            payload = JSON.parse(req.responseText);
+            makeYearDropdown(payload);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send();
+    event.preventDefault();
+};
+
+const makeNameDropdown = (rows) => {
+    var sel = document.getElementById('nameDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].last_name;
+        opt.value = rows[col].team_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makeYearDropdown = (rows) => {
+    var sel = document.getElementById('yearDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].year;
+        opt.value = rows[col].season_id;
+        sel.appendChild(opt);
+    }
+};
+
+const makePlayoffDropdown = (rows) => {
+    var sel = document.getElementById('playoffDropdown');
+    for (const col in rows) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(rows[col].last_name));
+        opt.label = rows[col].text;
+        opt.value = rows[col].value;
+        sel.appendChild(opt);
+    }
+};
+
+
 
 const loadTable = () => {
     var req = new XMLHttpRequest();
     req.open("GET", baseURL + "/loadSeasonTeams", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function() {
-        console.log(req)
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
             makeTable(payload);
@@ -28,18 +98,31 @@ const loadTable = () => {
 
 document.getElementById("insertSeasonTeam").addEventListener("click", () => {
     var req = new XMLHttpRequest();
-    var updatePayload = { season_id: null, 
-                          team_id: null, 
-                          made_playoffs: null,
-                          wins: null,
-                          losses: null,
-                          ties: null,
-                          points_scored: null,
-                          points_against: null };
 
-    updatePayload.season_id = document.getElementById("season_id").value;
-    updatePayload.team_id = document.getElementById("team_id").value;
-    updatePayload.made_playoffs = document.getElementById("made_playoffs").value;
+    var updatePayload = {
+        season_id: null,
+        team_id: null,
+        made_playoffs: null,
+        wins: null,
+        losses: null,
+        ties: null,
+        points_scored: null,
+        points_against: null
+    };
+
+    var yearDropDown = document.getElementById("yearDropdown");
+    year = yearDropDown.options[yearDropDown.selectedIndex].value;
+    updatePayload.season_id = year;
+
+    var teamDropDown = document.getElementById("nameDropdown");
+    team = teamDropDown.options[teamDropDown.selectedIndex].value;
+    updatePayload.team_id = team;
+
+    var playoffDropDown = document.getElementById("playoffDropdown");
+    playoffs = playoffDropDown.options[playoffDropDown.selectedIndex].value;
+    updatePayload.made_playoffs = playoffs;
+
+
     updatePayload.wins = document.getElementById("wins").value;
     updatePayload.losses = document.getElementById("losses").value;
     updatePayload.ties = document.getElementById("ties").value;
@@ -115,9 +198,8 @@ const makeRow = (tblBody, row) => {
 const deleteTable = () => {
     try {
         var tblRemove = document.getElementById("table");
-        tblRemove.remove(); 
-    }
-    catch{
+        tblRemove.remove();
+    } catch {
         location.reload();
-    }  
+    }
 };

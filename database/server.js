@@ -81,6 +81,14 @@ app.get("/loadSeasons", function(req, res) {
     });
 });
 
+app.get("/loadSeasonsAndIDs", function(req, res) {
+    var q = "SELECT season_id, year from seasons";
+
+    mysql.pool.query(q, function(err, rows, fields) {
+        if (err) throw err;
+        res.send(JSON.stringify(rows));
+    });
+});
 //Query to insert into seasons table on Seasons Admin page
 app.post('/insertSeason', function(req, res, next) {
 
