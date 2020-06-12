@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.set('port', 5065);
 
-
+// Standard to check if server is running - not actually used
 app.get("/", function(req, res) {
     res.send("Console is running");
 });
@@ -81,6 +81,7 @@ app.get("/loadSeasons", function(req, res) {
     });
 });
 
+// Query to get seasons and ids for drop down selectors
 app.get("/loadSeasonsAndIDs", function(req, res) {
     var q = "SELECT season_id, year from seasons";
 
@@ -89,6 +90,7 @@ app.get("/loadSeasonsAndIDs", function(req, res) {
         res.send(JSON.stringify(rows));
     });
 });
+
 //Query to insert into seasons table on Seasons Admin page
 app.post('/insertSeason', function(req, res, next) {
 
@@ -215,6 +217,7 @@ app.get("/loadTeamNames", function(req, res) {
     });
 });
 
+// Query for matchups page to return table and winners used for front-end work
 app.post("/loadTeamNames", function(req, res, next) {
     var team_id = req.body.team_id;
     console.log(team_id);
@@ -231,19 +234,7 @@ app.post("/loadTeamNames", function(req, res, next) {
     });
 });
 
-//Query to select overall records for selected team on Teams page
-// app.get("/loadRecords", function(req, res) {
-
-//     var q = "SELECT * from league_dues";
-
-//     mysql.pool.query(q, function(err, rows, fields) {
-//         if (err) throw err;
-//         res.send(JSON.stringify(rows));
-//     });
-// });
-
-
-//Query to select overall records for all teams based on criteria on the Standings page
+// Query for overall standings page
 app.get("/loadStandings", function(req, res) {
 
     var q = "select first_name as 'First Name', last_name as 'Last Name', sum(wins) as Wins, sum(losses) as Losses, sum(ties) as Ties, " +
@@ -265,24 +256,23 @@ app.post("/loadMatchupsbyTeams", function(req, res, next) {
     var home_team_id = req.body.team_id_1;
     var away_team_id = req.body.team_id_2;
 
-    var q = `SELECT * FROM matchups WHERE (home_team_id = ? AND away_team_id = ?) OR (home_team_id = ? AND away_team_id = ?);`;
+    var q = `SELECT year, week, home_team_id, away_team_id, home_team_score, away_team_score, CASE when home_team_score > away_team_score then home_team_id else away_team_id END as "Winner" FROM matchups m Join seasons s on s.season_id = m.season_id Join teams t on t.team_id = m.home_team_id WHERE (home_team_id = ? AND away_team_id = ?) OR (home_team_id = ? AND away_team_id = ?);`
 
     console.log(home_team_id);
     console.log(away_team_id);
 
-    /*
-    mysql.pool.query(q, (err, result) => {
-        if(err){
-          next(err);
-          return;
+
+    mysql.pool.query(q, [home_team_id, away_team_id, away_team_id, home_team_id], (err, result) => {
+        if (err) {
+            next(err);
+            return;
         }
         res.send(JSON.stringify(result));
     });
-    */
 });
 
 
-
+// Listen on server 
 app.listen(app.get('port'), function() {
     console.log('Express started on http://flip2.engr/oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
 });

@@ -56,13 +56,12 @@ document.getElementById("nameSubmit").addEventListener("click", () => {
     var updatePayload = { team_id_1: null, team_id_2: null };
 
     team_id_1 = dropdown1.options[dropdown1.selectedIndex].value;
+    team_1_name = dropdown1.options[dropdown1.selectedIndex].label;
     team_id_2 = dropdown2.options[dropdown2.selectedIndex].value;
+    team_2_name = dropdown2.options[dropdown2.selectedIndex].label;
 
     updatePayload.team_id_1 = team_id_1;
     updatePayload.team_id_2 = team_id_2;
-
-
-    console.log(updatePayload);
 
     req.open('POST', baseURL + "/loadMatchupsbyTeams", true);
     req.setRequestHeader('Content-Type', 'application/json');
@@ -70,6 +69,7 @@ document.getElementById("nameSubmit").addEventListener("click", () => {
     req.addEventListener("load", function() {
         if (req.status >= 200 && req.status < 400) {
             payload = JSON.parse(req.responseText);
+            makeRecord(team_id_1, team_id_2, payload, team_1_name, team_2_name);
             makeTable(payload);
         } else {
             var errorMessage = "Error: " + res.statusText;
@@ -80,6 +80,42 @@ document.getElementById("nameSubmit").addEventListener("click", () => {
     event.preventDefault();
 
 });
+
+const makeRecord = (id_1, id_2, allrows, team_1_name, team_2_name) => {
+    var body = document.getElementsByTagName("body")[0];
+    var div = document.createElement("div");
+    var p1 = document.createElement("p");
+
+    var text = document.createTextNode(``)
+
+    count_team_1_wins = 0;
+    count_team_2_wins = 0;
+
+    for (var i = 0; i < allrows.length; i++) {
+        if (payload[0].Winner == id_1) {
+            count_team_1_wins += 1;
+        } else {
+            count_team_2_wins += 1;
+        }
+
+    };
+
+    if (count_team_1_wins > count_team_2_wins) {
+        text = `${team_1_name} leads the series ${count_team_1_wins}-${count_team_2_wins} over ${team_2_name}`;
+    } else if (count_team_1_wins == count_team_2_wins) {
+        text = `Series is tied`;
+    } else {
+        text = `${team_2_name} leads the series ${count_team_2_wins}-${count_team_1_wins} over ${team_1_name}`;
+    }
+
+    var line = document.createTextNode(text);
+    p1.style.textAlign = "center";
+    p1.style.fontWeight = "bold";
+    p1.appendChild(line);
+    div.appendChild(p1);
+    body.appendChild(div);
+
+}
 
 const makeTable = (allRows) => {
     var body = document.getElementsByTagName("body")[0];
