@@ -18,8 +18,8 @@ CREATE TABLE `seasons` (
 `championship_team_id` int,
 `runner_up_id` int,
 PRIMARY KEY (season_id),
-FOREIGN KEY (championship_team_id) REFERENCES teams(team_id),
-FOREIGN KEY (runner_up_id) REFERENCES teams(team_id)
+FOREIGN KEY (championship_team_id) REFERENCES teams(team_id) ON DELETE SET NULL,
+FOREIGN KEY (runner_up_id) REFERENCES teams(team_id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `season_teams`;
@@ -34,7 +34,7 @@ CREATE TABLE `season_teams` (
 `points_against` FLOAT(10),
 PRIMARY KEY (season_id, team_id),
 FOREIGN KEY (season_id) REFERENCES seasons(season_id),
-FOREIGN KEY (team_id) REFERENCES teams(team_id)
+FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `league_dues`;
@@ -46,7 +46,7 @@ CREATE TABLE `league_dues` (
 `amount` int NOT NULL,
 PRIMARY KEY (dues_id),
 FOREIGN KEY (season_id) REFERENCES seasons(season_id),
-FOREIGN KEY (team_id) REFERENCES teams(team_id)
+FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `matchups`;
@@ -60,8 +60,8 @@ CREATE TABLE `matchups` (
 `away_team_score` FLOAT(10),
 PRIMARY KEY (matchup_id),
 FOREIGN KEY (season_id) REFERENCES seasons(season_id),
-FOREIGN KEY (home_team_id) REFERENCES teams(team_id),
-FOREIGN KEY (away_team_id) REFERENCES teams(team_id)
+FOREIGN KEY (home_team_id) REFERENCES teams(team_id) ON DELETE SET NULL,
+FOREIGN KEY (away_team_id) REFERENCES teams(team_id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 SET FOREIGN_KEY_CHECKS = 1;
