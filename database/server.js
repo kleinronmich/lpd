@@ -233,7 +233,7 @@ app.post("/loadTeamNames", function(req, res, next) {
 
 //Query to select overall records for selected team on Teams page
 // app.get("/loadRecords", function(req, res) {
-var q = `SELECT * FROM matchups WHERE (home_team_id = ? AND away_team_id = ?) OR (home_team_id = ? AND away_team_id = ?);`;
+
 //     var q = "SELECT * from league_dues";
 
 //     mysql.pool.query(q, function(err, rows, fields) {
@@ -260,10 +260,27 @@ app.get("/loadStandings", function(req, res) {
 });
 
 //Query to select all matchups between two selected temas
+app.post("/loadMatchupsbyTeams", function(req, res, next) {
 
+    var home_team_id = req.body.team_id_1;
+    var away_team_id = req.body.team_id_2;
 
+    var q = `SELECT * FROM matchups WHERE (home_team_id = ? AND away_team_id = ?) OR (home_team_id = ? AND away_team_id = ?);`;
 
-//Query to calculate and display overall record between those teams
+    console.log(home_team_id);
+    console.log(away_team_id);
+
+    /*
+    mysql.pool.query(q, (err, result) => {
+        if(err){
+          next(err);
+          return;
+        }
+        res.send(JSON.stringify(result));
+    });
+    */
+});
+
 
 
 app.listen(app.get('port'), function() {
